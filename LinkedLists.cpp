@@ -108,10 +108,22 @@ int main()
     // Testing remove()
     LinkedList<int> list;
     list.add(10);
-    list.remove(10);
-    assert(list.start == nullptr);
-    assert(list.end == nullptr);
-   
+    list.add(20);
+    list.add(30);
+
+    list.remove(30);
+
+    assert(list.start != nullptr);
+    assert(list.end != nullptr);
+
+    assert(list.start->value == 10);
+    assert(list.end->value == 20);
+
+    assert(list.start->previous == nullptr);
+    assert(list.end->next == nullptr);
+
+    assert(list.start->next == list.end);
+    assert(list.end->previous == list.start);
 
  
 }
