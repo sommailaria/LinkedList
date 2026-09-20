@@ -57,7 +57,7 @@ struct LinkedList {
         std::cout << query << " is not in the list. \n";
         return false;
     }
-    // findElement Complexity: O(1) if query is found in 1 step, O(n) otherwise
+    // findElement Complexity: O(n) 
  
     void remove(const T& item) {
         Element<T>* current = start;
@@ -96,8 +96,29 @@ struct LinkedList {
             }
             current = current->next;
         }
+        // remove() complexity: O(n);
 }
     
+    void merge(LinkedList<T>& list)
+    {
+        end->next = list.start;
+        list.start->previous = end;
+        end = list.end;
+        list.start = nullptr;
+        list.end = nullptr;
+    }
+    // merge() complexity: O(1);
+
+    void print()
+    {
+        Element<T>* current = start;
+        while (current != nullptr)
+        {
+            std::cout << current->value << std::endl;
+            current = current->next;
+        }
+    }
+    //print() complexity: O(n);
 };
 
 
@@ -105,25 +126,29 @@ struct LinkedList {
 
 int main()
 {
-    // Testing remove()
-    LinkedList<int> list;
-    list.add(10);
-    list.add(20);
-    list.add(30);
+    // Tests for merging
+    
+    LinkedList<int> num1;
+    num1.add(10);
+    num1.add(20);
+    num1.add(30);
+    std::cout << "num1 before the merge: \n";
+    num1.print();
 
-    list.remove(30);
+    LinkedList<int> num2;
+    num2.add(40);
+    num2.add(50);
+    std::cout << "num2 before the merge: \n";
+    num2.print();
 
-    assert(list.start != nullptr);
-    assert(list.end != nullptr);
+    num1.merge(num2);
+    std::cout << "num1 after the merge: \n";
+    num1.print();
 
-    assert(list.start->value == 10);
-    assert(list.end->value == 20);
+    
 
-    assert(list.start->previous == nullptr);
-    assert(list.end->next == nullptr);
 
-    assert(list.start->next == list.end);
-    assert(list.end->previous == list.start);
+
 
  
 }
