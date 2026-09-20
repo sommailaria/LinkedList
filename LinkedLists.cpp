@@ -70,31 +70,40 @@ struct LinkedList {
                     start = nullptr;
                     end = nullptr;
                     delete current;
-                    return;
+                    current = nullptr;
                 }
-                if (current->previous == nullptr && current->next != nullptr)
+                else if (current->previous == nullptr && current->next != nullptr)
                 {
+                    Element<T>* temp = current->next;
                     start = current->next;
                     start->previous = nullptr;
                     delete current;
-                    return;
+                    current = temp;
+                    
                 }
-                if (current->previous != nullptr && current->next == nullptr)
+                else if (current->previous != nullptr && current->next == nullptr)
                 {
                     end = current->previous;
                     end->next = nullptr;
                     delete current;
-                    return;
+                    current = nullptr;
                 }
-                if (current->previous != nullptr && current->next != nullptr)
+                else if (current->previous != nullptr && current->next != nullptr)
                 {
+                    Element<T>* temp = current->next;
                     current->previous->next = current->next;
                     current->next->previous = current->previous;
                     delete current;
-                    return;
+                    current = temp;
                 }
             }
-            current = current->next;
+            else
+            {
+               current = current->next;
+                    
+            }
+            
+            
         }
         // remove() complexity: O(n);
 }
@@ -126,25 +135,20 @@ struct LinkedList {
 
 int main()
 {
-    // Tests for merging
+    // Testing
     
-    LinkedList<int> num1;
-    num1.add(10);
-    num1.add(20);
-    num1.add(30);
-    std::cout << "num1 before the merge: \n";
-    num1.print();
+    LinkedList<int> num;
+    num.add(10);
+    num.add(20);
 
     LinkedList<int> num2;
+    num2.add(30);
     num2.add(40);
-    num2.add(50);
-    std::cout << "num2 before the merge: \n";
-    num2.print();
 
-    num1.merge(num2);
-    std::cout << "num1 after the merge: \n";
-    num1.print();
-
+    num.merge(num2);
+    num.add(30);
+    num.remove(30);
+    num.print();
     
 
 
