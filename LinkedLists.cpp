@@ -12,10 +12,11 @@ struct Element {
 };
 
 template <typename T>
-struct LinkedList {
-
+class LinkedList {
+private:
 	Element<T>* start = nullptr;
 	Element<T>* end = nullptr;
+public:
 
 	void add(const T& listMember) {
 
@@ -158,8 +159,6 @@ struct LinkedList {
 };
 
 
-
-
 int main()
 {
 	// Testing
@@ -182,11 +181,6 @@ int main()
 	list.remove(100);
 	std::cout << "Current list after removal: \n";
 	list.print();
-
-
-
-
-
 
 }
 
