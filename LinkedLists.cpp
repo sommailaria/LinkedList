@@ -52,7 +52,7 @@ public:
 	}
 	//Destructor complexity = O(n)
 
-	bool find(const T& query)
+	Element<T>* find(const T& query)
 	{
 		Element<T>* current = start;
 
@@ -60,66 +60,51 @@ public:
 		{
 			if (query == current->value)
 			{
-				std::cout << query << " is in the list. \n";
-				return true;
+				
+				return current;
 
 			}
 
 			current = current->next;
 		}
-		std::cout << query << " is not in the list. \n";
-		return false;
+		
+		return nullptr;
 	}
 	// find() complexity: O(n)
 
 	void remove(const T& item) {
-		Element<T>* current = start;
-		while (current != nullptr)
+		Element<T>* current = find(item);
+		if (current != nullptr) 
 		{
-			if (item == current->value)
+			if (current->previous == nullptr && current->next == nullptr)
 			{
-				if (current->previous == nullptr && current->next == nullptr)
-				{
-					start = nullptr;
-					end = nullptr;
-					delete current;
-					current = nullptr;
-				}
-				else if (current->previous == nullptr && current->next != nullptr)
-				{
-					Element<T>* temp = current->next;
-					start = current->next;
-					start->previous = nullptr;
-					delete current;
-					current = temp;
-
-				}
-				else if (current->previous != nullptr && current->next == nullptr)
-				{
-					end = current->previous;
-					end->next = nullptr;
-					delete current;
-					current = nullptr;
-				}
-				else if (current->previous != nullptr && current->next != nullptr)
-				{
-					Element<T>* temp = current->next;
-					current->previous->next = current->next;
-					current->next->previous = current->previous;
-					delete current;
-					current = temp;
-				}
-			}
-			else
+				start = nullptr;
+				end = nullptr;
+				delete current;
+				current = nullptr;
+		   }
+			else if (current->previous == nullptr && current->next != nullptr)
 			{
-				current = current->next;
-
+				start = current->next;
+				start->previous = nullptr;
+				delete current;
 			}
-
-
+			else if (current->previous != nullptr && current->next == nullptr)
+			{
+				end = current->previous;
+				end->next = nullptr;
+				delete current;
+			}
+			else if (current->previous != nullptr && current->next != nullptr)
+			{
+				current->previous->next = current->next;
+				current->next->previous = current->previous;
+				delete current;
+			}
 		}
-		// remove() complexity: O(n);
+		
 	}
+	// remove() complexity: O(n);
 
 	void merge(LinkedList<T>& list)
 	{
@@ -167,21 +152,7 @@ int main()
 	list.add(10);
 	list.add(20);
 	list.add(30);
-	std::cout << "List before replace: \n";
-	list.print();
-	list.replace(30, 100);
-	std::cout << "List after replace: \n";
-	list.print();
-	list.add(200);
-	list.add(800);
-	std::cout << "Current list before removal: \n";
-	list.print();
-	list.remove(10);
-	list.remove(800);
-	list.remove(100);
-	std::cout << "Current list after removal: \n";
-	list.print();
-
+	
 }
 
 
