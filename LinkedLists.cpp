@@ -84,21 +84,21 @@ public:
 		{
 			if (query == current->value)
 			{
-				
+
 				return current;
 
 			}
 
 			current = current->next;
 		}
-		
+
 		return nullptr;
 	}
 	// find() complexity: O(n)
 
 	void remove(const T& item) {
 		Element<T>* current = find(item);
-		while (current != nullptr) 
+		while (current != nullptr)
 		{
 			if (current->previous == nullptr && current->next == nullptr)
 			{
@@ -106,7 +106,7 @@ public:
 				end = nullptr;
 				delete current;
 				current = nullptr;
-		   }
+			}
 			else if (current->previous == nullptr && current->next != nullptr)
 			{
 				start = current->next;
@@ -127,7 +127,7 @@ public:
 			}
 			current = find(item);
 		}
-		
+
 	}
 	// remove() complexity: O(n^2);
 
@@ -167,7 +167,7 @@ public:
 	}
 	//replace() complexity: O(n);
 
-	
+
 	void addBefore(const T& listItem, const T& insertBefore)
 	{
 		Element<T>* current = find(listItem);
@@ -191,9 +191,9 @@ public:
 			}
 
 		}
-		
+
 	}
-	
+
 	//addBefore() complexity: O(n);
 
 	void addAfter(const T& listItem, const T& insertAfter)
@@ -203,7 +203,7 @@ public:
 		if (current != nullptr)
 		{
 			Element<T>* addition = new Element<T>;
-			addition->value = insertAfter;	
+			addition->value = insertAfter;
 			if (current->next == nullptr)
 			{
 				addition->previous = current;
@@ -220,13 +220,37 @@ public:
 		}
 	}
 	//addAfter() complexity: O(n)
+
+	void printElementInfo(const T& element)
+	{
+		Element<T>* result = find(element);
+
+		if (result != nullptr)
+		{
+			std::cout << "Found value: " << result->value << '\n';
+
+			if (result->previous != nullptr)
+			{
+				std::cout << "Found previous value: " << result->previous->value << '\n';
+			}
+
+			if (result->next != nullptr)
+			{
+				std::cout << "Found next value: " << result->next->value << '\n';
+			}
+		}
+		else
+		{
+			std::cout << "Element not found.\n";
+		}
+	}
 };
 
 
 
 int main()
 {
-	 //Testing
+	//Testing
 
 	LinkedList<int> list;
 	list.add(10);
@@ -239,7 +263,7 @@ int main()
 	copy.replace(20, 200);
 	std::cout << "This is the original list - no values changed: \n";
 	list.print();
-	
+
 	copy.print();
 
 	std::cout << "Testing remove below; \n";
@@ -266,6 +290,15 @@ int main()
 	five.addAfter(30, 31);
 	five.addAfter(5, 6);
 	five.print();
+
+	five.printElementInfo(5); // First element case
+	five.printElementInfo(21); // Middle element case
+	five.printElementInfo(31); // Last element case
+	five.printElementInfo(50); // Not found case
+
+
+
+
 }
 
 
