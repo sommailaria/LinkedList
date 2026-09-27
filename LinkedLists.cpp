@@ -244,6 +244,7 @@ public:
 			std::cout << "Element not found.\n";
 		}
 	}
+	// printElementInfo() complexity: O(1)
 };
 
 
